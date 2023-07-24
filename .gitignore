@@ -1,0 +1,39 @@
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.userprefs
+*.sln.docstates
+
+# Build output
+bin/
+obj/
+publish/
+
+# NuGet
+*.nuget.props
+*.nuget.targets
+NuGet.Config
+
+# MSTest test Results
+TestResults/
+
+# Build results
+[Dd]ebug/
+[Rr]elease/
+
+# Node.js
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Blazor WebAssembly files
+/_framework/
+/wwwroot/dist/
+
+# Visual Studio Code
+.vscode/
+
+# Other build files
+*.cache
+*.log
