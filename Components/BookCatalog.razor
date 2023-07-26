@@ -59,8 +59,8 @@
   private List<Book> FilteredBooks => string.IsNullOrWhiteSpace(searchTerm)
     ? books
     : books.Where(b => b.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                      || b.Author.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-              .ToList();
+                    || b.Author.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+           .ToList();
 
   public class Book
   {
