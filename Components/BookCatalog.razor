@@ -1,0 +1,74 @@
+<input type="text" @bind="searchTerm" placeholder="Search" />
+<table style="border-collapse: separate; border-spacing: 10px;">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Author</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Average Rating</th>
+      </tr>
+    </thead>
+    <tbody>
+        @foreach (var book in FilteredBooks)
+        {
+          <tr>
+            <td>@book.Title</td>
+            <td>@book.Author</td>
+            <td>@book.Description</td>
+            <td>@book.Price</td>
+            <td>@book.AverageRating</td>
+          </tr>
+        }
+    </tbody>
+</table>
+
+@code {
+  private string searchTerm = "";
+  private List<Book> books = new List<Book>
+  {
+    new Book
+    {
+      Id = 1,
+      Title = "Book 1",
+      Author = "Author A",
+      Description = "This is Book 1 description.",
+      Price = 19.99,
+      AverageRating = 4.5
+    },
+    new Book
+    {
+      Id = 2,
+      Title = "Book 2",
+      Author = "Author B",
+      Description = "This is Book 2 description.",
+      Price = 14.99,
+      AverageRating = 4.2
+    },
+    new Book
+    {
+      Id = 3,
+      Title = "Book 3",
+      Author = "Author C",
+      Description = "This is Book 3 description.",
+      Price = 24.99,
+      AverageRating = 4.8
+    },
+  };
+
+  private List<Book> FilteredBooks => string.IsNullOrWhiteSpace(searchTerm)
+    ? books
+    : books.Where(b => b.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                      || b.Author.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+              .ToList();
+
+  public class Book
+  {
+    public int Id { get; set; }
+    public string Title { get; set; }
+    public string Author { get; set; }
+    public string Description { get; set; }
+    public double Price { get; set; }
+    public double AverageRating { get; set; }
+  }
+}
