@@ -1,4 +1,4 @@
-@page "/"
+﻿@page "/"
 
 <h3>Book Catalog</h3>
 
@@ -38,16 +38,19 @@
 
     private List<Book> FilteredBooks => string.IsNullOrWhiteSpace(searchTerm)
         ? books
-        : books.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
-                          || p.Occupation.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+        : books.Where(b => b.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                          || b.Author.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
                  .ToList();
 
-    private class Book
-    {
-        public string Name { get; set; }
-        public int Age { get; set; }
-        public string Occupation { get; set; }
-    }
+  public class Book
+  {
+    public int Id { get; set; }
+    public string? Title { get; set; }
+    public string? Author { get; set; }
+    public string? Description { get; set; }
+    public double Price { get; set; }
+    public double AverageRating { get; set; }
+  }
 
     // Define searchTerm as a public property
     [Parameter]
