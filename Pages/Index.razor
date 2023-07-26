@@ -1,94 +1,63 @@
 @page "/"
 
-@code {
-  public static class MockBookData
-  {
-    public static List<Book> GetBooks()
-    {
-      return new List<Book>
-      {
-        new Book
-        {
-          Id = 1,
-          Title = "Book 1",
-          Author = "Author A",
-          Description = "This is Book 1 description.",
-          Price = 19.99,
-          AverageRating = 4.5
-        },
-        new Book
-        {
-          Id = 2,
-          Title = "Book 2",
-          Author = "Author B",
-          Description = "This is Book 2 description.",
-          Price = 14.99,
-          AverageRating = 4.2
-        },
-        new Book
-        {
-          Id = 3,
-          Title = "Book 3",
-          Author = "Author C",
-          Description = "This is Book 3 description.",
-          Price = 24.99,
-          AverageRating = 4.8
-        },
-      };
-    }
-  }
-
-  public class Book
-  {
-    public int Id { get; set; }
-    public string? Title { get; set; }
-    public string? Author { get; set; }
-    public string? Description { get; set; }
-    public double Price { get; set; }
-    public double AverageRating { get; set; }
-  }
-
-  List<Book>? books;
-
-  protected override void OnInitialized()
-  {
-    books = MockBookData.GetBooks();
-  }
-}
-
 <h3>Book Catalog</h3>
 
 <PageTitle>Book Catalog</PageTitle>
 
-<label>Book Search:
-  <input type="text" name="inputSearch" class="search" placeholder="find a book..." />
-</label>
+@page "/table"
 
-@if (books != null)
-{
-  <table>
+<input type="text" @bind="searchTerm" placeholder="Search" />
+<table>
     <thead>
-      <tr>
-        <th>ID</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Description</th>
-        <th>Price</th>
-        <th>Average Rating</th>
-      </tr>
+        <tr>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Occupation</th>
+        </tr>
     </thead>
     <tbody>
-        @foreach (var book in books)
+        @foreach (var book in FilteredBooks)
         {
-          <tr>
-            <td>@book.Id</td>
-            <td>@book.Title</td>
-            <td>@book.Author</td>
-            <td>@book.Description</td>
-            <td>@book.Price</td>
-            <td>@book.AverageRating</td>
-          </tr>
+            <tr>
+                <td>@book.Name</td>
+                <td>@book.Age</td>
+                <td>@book.Occupation</td>
+            </tr>
         }
     </tbody>
-  </table>
+</table>
+
+@code {
+    private string searchTerm = "";
+    private List<Book> books = new List<Book>
+    {
+        new Book { Name = "John Doe", Age = 30, Occupation = "Engineer" },
+        new Book { Name = "Jane Smith", Age = 25, Occupation = "Designer" },
+        // Add more sample data here
+    };
+
+    private List<Book> FilteredBooks => string.IsNullOrWhiteSpace(searchTerm)
+        ? books
+        : books.Where(p => p.Name.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
+                          || p.Occupation.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
+                 .ToList();
+
+    private class Book
+    {
+        public string Name { get; set; }
+        public int Age { get; set; }
+        public string Occupation { get; set; }
+    }
+
+    // Define searchTerm as a public property
+    [Parameter]
+    public string SearchTerm
+    {
+        get => searchTerm;
+        set
+        {
+            searchTerm = value;
+            StateHasChanged(); // Trigger re-render when the searchTerm changes
+        }
+    }
 }
