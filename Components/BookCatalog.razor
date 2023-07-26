@@ -60,7 +60,7 @@
     ? books
     : books.Where(b => b.Title.Contains(searchTerm, StringComparison.OrdinalIgnoreCase)
                     || b.Author.Contains(searchTerm, StringComparison.OrdinalIgnoreCase))
-           .ToList();
+           .ToList(); // Change from IENumerable to List
 
   public class Book
   {
