@@ -1,6 +1,4 @@
-# Project Idea: Online Bookstore
-
-## Create an online bookstore using Blazor. This project will involve building a dynamic web application where users can browse a collection of books, search for specific titles or authors, add books to their shopping cart, and complete the checkout process. You can use mock data or integrate with a real backend (e.g., a RESTful API or a database) for the book data.
+# Online Bookstore
 
 ## Key Features:
 
